@@ -1,0 +1,37 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.6.33815.320
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DataAccess", "DataAccess\DataAccess.csproj", "{8A9B6681-E400-4C12-BFF7-BB60C3EED904}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "EStoreAPI", "EStoreAPI\EStoreAPI.csproj", "{2CCF724F-F074-48AC-BCDE-AB9263C82317}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EStoreWeb", "EStoreWeb\EStoreWeb.csproj", "{15F13E7B-3CF2-45B3-B351-20002A78CE68}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{8A9B6681-E400-4C12-BFF7-BB60C3EED904}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8A9B6681-E400-4C12-BFF7-BB60C3EED904}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8A9B6681-E400-4C12-BFF7-BB60C3EED904}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8A9B6681-E400-4C12-BFF7-BB60C3EED904}.Release|Any CPU.Build.0 = Release|Any CPU
+		{2CCF724F-F074-48AC-BCDE-AB9263C82317}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2CCF724F-F074-48AC-BCDE-AB9263C82317}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2CCF724F-F074-48AC-BCDE-AB9263C82317}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2CCF724F-F074-48AC-BCDE-AB9263C82317}.Release|Any CPU.Build.0 = Release|Any CPU
+		{15F13E7B-3CF2-45B3-B351-20002A78CE68}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{15F13E7B-3CF2-45B3-B351-20002A78CE68}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{15F13E7B-3CF2-45B3-B351-20002A78CE68}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{15F13E7B-3CF2-45B3-B351-20002A78CE68}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {E739DCBD-055E-4C0D-BCCA-D524807F8B42}
+	EndGlobalSection
+EndGlobal
