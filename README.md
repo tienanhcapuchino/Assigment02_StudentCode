@@ -1,1 +1,1 @@
-# Assigment02Solution_StudentCod
+# Assigment02Solution_StudentCode
