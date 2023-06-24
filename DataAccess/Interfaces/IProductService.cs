@@ -11,5 +11,7 @@ namespace DataAccess.Interfaces
     public interface IProductService : IRepository<Product>
     {
         List<ProductVM> GetAllProducts();
+        bool DeleteProduct(int id);
+        bool AddProduct(ProductAddModel product);
     }
 }

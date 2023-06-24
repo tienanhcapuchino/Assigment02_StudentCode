@@ -13,8 +13,11 @@ namespace DataAccess.AutoMapper
     {
         public MappingProfile()
         {
+            #region product
             CreateMap<Product, ProductVM>()
                 .ForMember(dest => dest.CategoryName, opt => opt.MapFrom(src => src.Category.CategoryName));
+            CreateMap<ProductAddModel, Product>();
+            #endregion
         }
     }
 }
