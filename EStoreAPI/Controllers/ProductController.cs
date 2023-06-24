@@ -18,7 +18,7 @@ namespace EStoreAPI.Controllers
         {
             try
             {
-                var result = _productService.GetAll();
+                var result = _productService.GetAllProducts();
                 return Ok(result);
             }
             catch (Exception ex)
