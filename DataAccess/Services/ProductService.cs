@@ -24,12 +24,46 @@ namespace DataAccess.Services
         }
         public bool Add(Product entity, bool saveChange = true)
         {
-            throw new NotImplementedException();
+            _dbContext.Add(entity);
+            bool result = true;
+            if (saveChange)
+            {
+                result = _dbContext.SaveChanges() > 0;
+            }
+            return result;
+        }
+
+        public bool AddProduct(ProductAddModel product)
+        {
+            if (string.IsNullOrEmpty(product.Name))
+            {
+                return false;
+            }
+            Product entity = _mapper.Map<Product>(product);
+            bool result = Add(entity);
+            return result;
         }
 
         public bool Delete(Product entity, bool saveChange = true)
         {
-            throw new NotImplementedException();
+            _dbContext.Remove(entity);
+            bool result = true;
+            if (saveChange)
+            {
+                result = _dbContext.SaveChanges() > 0;
+            }
+            return result;
+        }
+
+        public bool DeleteProduct(int id)
+        {
+            var product = GetById(id);
+            if (product == null)
+            {
+                return false;
+            }
+            bool result = Delete(product);
+            return result;
         }
 
         public List<Product> GetAll()
@@ -47,7 +81,7 @@ namespace DataAccess.Services
 
         public Product GetById(int id)
         {
-            throw new NotImplementedException();
+            return _dbContext.Products.FirstOrDefault(x => x.ProductId == id);
         }
 
         public bool Update(Product entity, bool saveChange = true)

@@ -30,7 +30,7 @@
                     <td>@s.UnitPrice</td>
                     <td>@s.UnitInStock</td>
                     <td>@s.Weight</td>
-                    <td><a href="#">Delete</a></td>
+                    <td><a asp-controller="product" asp-action="delete" asp-route-id="@s.ProductId">Delete</a></td>
                 </tr>
             }
         </tbody>

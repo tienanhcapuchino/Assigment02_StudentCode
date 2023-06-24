@@ -1,4 +1,5 @@
 ﻿using DataAccess.Models;
+using DataAccess.Services;
 using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
 
@@ -16,8 +17,7 @@ namespace EStoreWeb.Controllers
             try
             {
                 string url = "http://localhost:5063/api/Product/getall";
-                HttpClient client = new HttpClient();
-                HttpResponseMessage respone = client.GetAsync(url).GetAwaiter().GetResult();
+                HttpResponseMessage respone = CommonService.GetDataAPI(url, MethodAPI.GET);
                 List<ProductVM> products = new List<ProductVM>();
                 if (respone.IsSuccessStatusCode)
                 {
@@ -31,6 +31,27 @@ namespace EStoreWeb.Controllers
                 _logger.LogError("error when get all product!", ex);
                 throw;
             }
+        }
+        public IActionResult Delete(int id)
+        {
+            string url = $"http://localhost:5063/api/Product/{id}";
+            HttpResponseMessage respone = CommonService.GetDataAPI(url, MethodAPI.DELETE);
+            if (respone.IsSuccessStatusCode)
+            {
+                return RedirectToAction("Index");
+            }
+            return NotFound();
+        }
+        public IActionResult Add (ProductAddModel model)
+        {
+            string url = "http://localhost:5063/api/Product/add";
+            string jsonData = JsonConvert.SerializeObject(model);
+            HttpResponseMessage respone = CommonService.GetDataAPI(url, MethodAPI.POST, jsonData);
+            if (respone.IsSuccessStatusCode)
+            {
+                return RedirectToAction("Index");
+            }
+            return BadRequest("Cannot add!");
         }
     }
 }

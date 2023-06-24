@@ -1,4 +1,5 @@
 ﻿using DataAccess.Interfaces;
+using DataAccess.Models;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
@@ -20,6 +21,30 @@ namespace EStoreAPI.Controllers
             {
                 var result = _productService.GetAllProducts();
                 return Ok(result);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
+        }
+        [HttpDelete("{id}")]
+        public IActionResult Delete([FromRoute] int id)
+        {
+            try
+            {
+                return Ok(_productService.DeleteProduct(id));
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
+        }
+        [HttpPost("add")]
+        public IActionResult Add([FromBody] ProductAddModel model)
+        {
+            try
+            {
+                return Ok(_productService.AddProduct(model));
             }
             catch (Exception ex)
             {
