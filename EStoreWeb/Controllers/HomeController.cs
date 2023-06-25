@@ -23,6 +23,11 @@ namespace EStoreWeb.Controllers
             return View();
         }
 
+        public IActionResult Register()
+        {
+            return View("/Views/Home/Register.cshtml");
+        }
+
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
         public IActionResult Error()
         {

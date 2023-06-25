@@ -1,15 +1,14 @@
-﻿@addTagHelper *,Microsoft.AspNetCore.Mvc.TagHelpers
-
+﻿@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
 @{
-    ViewData["Title"] = "Login page";
 }
-
 <div class="container">
     <div class="row justify-content-center">
         <div class="col-md-6">
             <div class="card mt-5">
                 <div class="card-header">
-                    <h4>Login</h4>
+                    <h4>Register</h4>
                 </div>
                 <div class="card-body">
                     <form>
@@ -22,9 +21,7 @@
                             <input type="password" class="form-control" id="password" placeholder="Enter password">
                         </div>
                         <br />
-                        <button type="submit" class="btn btn-primary">Login</button>
-                        <br />
-                        <p class="form-control">If you don't have account. Please <a asp-controller="Home" asp-action="Register">register.</a></p>
+                        <button type="submit" class="btn btn-primary">Register</button>
                     </form>
                 </div>
             </div>

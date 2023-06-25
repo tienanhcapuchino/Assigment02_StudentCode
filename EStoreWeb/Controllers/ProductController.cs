@@ -1,13 +1,17 @@
-﻿using DataAccess.Models;
+﻿using DataAccess.Entities;
+using DataAccess.Models;
 using DataAccess.Services;
 using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
+using System.Collections.Generic;
 
 namespace EStoreWeb.Controllers
 {
     public class ProductController : Controller
     {
         private readonly ILogger<ProductController> _logger;
+        //[BindProperty]
+        //public ProductAddModel AddModel { get; set; }
         public ProductController(ILogger<ProductController> logger)
         {
             _logger = logger;
@@ -34,18 +38,44 @@ namespace EStoreWeb.Controllers
         }
         public IActionResult Delete(int id)
         {
-            string url = $"http://localhost:5063/api/Product/{id}";
-            HttpResponseMessage respone = CommonService.GetDataAPI(url, MethodAPI.DELETE);
-            if (respone.IsSuccessStatusCode)
+            try
             {
+                string url = $"http://localhost:5063/api/Product/{id}";
+                HttpResponseMessage respone = CommonService.GetDataAPI(url, MethodAPI.DELETE);
+                if (respone.IsSuccessStatusCode)
+                {
+                    return RedirectToAction("Index");
+                }
+                return NotFound();
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.ToString());
+            }
+        }
+        public IActionResult Add()
+        {
+            try
+            {
+                string url = "http://localhost:5063/api/Category/getall";
+                HttpResponseMessage respone = CommonService.GetDataAPI(url, MethodAPI.GET);
+                if (respone.IsSuccessStatusCode)
+                {
+                    var datas = respone.Content.ReadAsStringAsync().GetAwaiter().GetResult();
+                    List <Category> categories = JsonConvert.DeserializeObject<List<Category>>(datas);
+                    return View("/Views/Product/Add.cshtml", categories);
+                }
                 return RedirectToAction("Index");
             }
-            return NotFound();
+            catch (Exception ex)
+            {
+                return BadRequest(ex.ToString());
+            }
         }
-        public IActionResult Add (ProductAddModel model)
+        public IActionResult OnAdd(ProductAddModel productModel)
         {
             string url = "http://localhost:5063/api/Product/add";
-            string jsonData = JsonConvert.SerializeObject(model);
+            string jsonData = JsonConvert.SerializeObject(productModel);
             HttpResponseMessage respone = CommonService.GetDataAPI(url, MethodAPI.POST, jsonData);
             if (respone.IsSuccessStatusCode)
             {

@@ -21,12 +21,12 @@ namespace DataAccess.Services
             {
                 respone = client.DeleteAsync(url).GetAwaiter().GetResult();
             }
-            else if (string.IsNullOrEmpty(jsonData) && method == MethodAPI.POST)
+            else if (!string.IsNullOrEmpty(jsonData) && method == MethodAPI.POST)
             {
                 HttpContent content = new StringContent(jsonData, Encoding.UTF8, "application/json");
                 respone = client.PostAsync(url, content).GetAwaiter().GetResult();
             }
-            else if (string.IsNullOrEmpty(jsonData) && method == MethodAPI.PUT)
+            else if (!string.IsNullOrEmpty(jsonData) && method == MethodAPI.PUT)
             {
                 HttpContent content = new StringContent(jsonData, Encoding.UTF8, "application/json");
                 respone = client.PutAsync(url, content).GetAwaiter().GetResult();
