@@ -15,11 +15,11 @@ namespace EStoreAPI.Controllers
             _productService = productService;
         }
         [HttpGet("getall")]
-        public IActionResult GetAllProducts()
+        public async Task<IActionResult> GetAllProducts()
         {
             try
             {
-                var result = _productService.GetAllProducts();
+                var result = await _productService.GetAllProducts();
                 return Ok(result);
             }
             catch (Exception ex)
@@ -28,11 +28,11 @@ namespace EStoreAPI.Controllers
             }
         }
         [HttpDelete("{id}")]
-        public IActionResult Delete([FromRoute] int id)
+        public async Task<IActionResult> Delete([FromRoute] int id)
         {
             try
             {
-                return Ok(_productService.DeleteProduct(id));
+                return Ok(await _productService.DeleteProduct(id));
             }
             catch (Exception ex)
             {
@@ -40,11 +40,11 @@ namespace EStoreAPI.Controllers
             }
         }
         [HttpPost("add")]
-        public IActionResult Add([FromBody] ProductAddModel model)
+        public async Task<IActionResult> Add([FromBody] ProductAddModel model)
         {
             try
             {
-                return Ok(_productService.AddProduct(model));
+                return Ok(await _productService.AddProduct(model));
             }
             catch (Exception ex)
             {

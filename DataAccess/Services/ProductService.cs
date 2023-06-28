@@ -22,69 +22,69 @@ namespace DataAccess.Services
             _dbContext = dbContext;
             _mapper = mapper;
         }
-        public bool Add(Product entity, bool saveChange = true)
+        public async Task<bool> Add(Product entity, bool saveChange = true)
         {
-            _dbContext.Add(entity);
+            await _dbContext.AddAsync(entity);
             bool result = true;
             if (saveChange)
             {
-                result = _dbContext.SaveChanges() > 0;
+                result = await _dbContext.SaveChangesAsync() > 0;
             }
             return result;
         }
 
-        public bool AddProduct(ProductAddModel product)
+        public async Task<bool> AddProduct(ProductAddModel product)
         {
             if (string.IsNullOrEmpty(product.Name))
             {
                 return false;
             }
             Product entity = _mapper.Map<Product>(product);
-            bool result = Add(entity);
+            bool result = await Add(entity);
             return result;
         }
 
-        public bool Delete(Product entity, bool saveChange = true)
+        public async Task<bool> Delete(Product entity, bool saveChange = true)
         {
             _dbContext.Remove(entity);
             bool result = true;
             if (saveChange)
             {
-                result = _dbContext.SaveChanges() > 0;
+                result = await _dbContext.SaveChangesAsync() > 0;
             }
             return result;
         }
 
-        public bool DeleteProduct(int id)
+        public async Task<bool> DeleteProduct(int id)
         {
-            var product = GetById(id);
+            var product = await GetById(id);
             if (product == null)
             {
                 return false;
             }
-            bool result = Delete(product);
+            bool result = await Delete(product);
             return result;
         }
 
-        public List<Product> GetAll()
+        public async Task<List<Product>> GetAll()
         {
-            var result = _dbContext.Products.Include(x => x.Category).ToList();
+            var result = await _dbContext.Products.Include(x => x.Category).ToListAsync();
             return result;
         }
 
-        public List<ProductVM> GetAllProducts()
+        public async Task<List<ProductVM>> GetAllProducts()
         {
-            var products = GetAll();
+            var products = await GetAll();
             var result = _mapper.Map<List<ProductVM>>(products);
             return result;
         }
 
-        public Product GetById(int id)
+        public async Task<Product> GetById(int id)
         {
-            return _dbContext.Products.FirstOrDefault(x => x.ProductId == id);
+            return await _dbContext.Products.FirstOrDefaultAsync(x => x.ProductId == id);
         }
 
-        public bool Update(Product entity, bool saveChange = true)
+        public Task<bool> Update(Product entity, bool saveChange = true)
         {
             throw new NotImplementedException();
         }
