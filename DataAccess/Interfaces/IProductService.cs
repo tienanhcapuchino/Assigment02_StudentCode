@@ -1,5 +1,5 @@
-﻿using DataAccess.Entities;
-using DataAccess.Models;
+﻿using BussinessObject.Entities;
+using BussinessObject.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;

@@ -5,9 +5,10 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace DataAccess.Entities
+namespace BussinessObject.Entities
 {
     public class User : IdentityUser
     {
+        public virtual ICollection<Order> Orders { get; set; }
     }
 }
