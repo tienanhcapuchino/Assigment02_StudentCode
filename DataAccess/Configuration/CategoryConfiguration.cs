@@ -1,4 +1,4 @@
-﻿using DataAccess.Entities;
+﻿using BussinessObject.Entities;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using System;

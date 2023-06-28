@@ -1,5 +1,5 @@
 ﻿using DataAccess.DataContext;
-using DataAccess.Entities;
+using BussinessObject.Entities;
 using DataAccess.Interfaces;
 using System;
 using System.Collections.Generic;

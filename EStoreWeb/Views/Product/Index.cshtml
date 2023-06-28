@@ -4,11 +4,11 @@
 @{
 }
 @addTagHelper *,Microsoft.AspNetCore.Mvc.TagHelpers
-@using DataAccess.Models;
+@using BussinessObject.Models;
 <h1>List All Products</h1>
 <a class="btn btn-primary" asp-controller="Product" asp-action="Add">Add new product</a>
 <div>
-    <table class="table">
+    @*<table class="table">
         <thead>
             <tr>
                 <th>ID</th>
@@ -34,5 +34,5 @@
                 </tr>
             }
         </tbody>
-    </table>
+    </table>*@
 </div>

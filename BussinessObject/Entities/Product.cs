@@ -4,22 +4,17 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace DataAccess.Models
+namespace BussinessObject.Entities
 {
-    public class ProductVM
+    public class Product
     {
         public int ProductId { get; set; }
-        public string CategoryName { get; set; }
+        public int CategoryId { get; set; }
         public string Name { get; set; }
         public double Weight { get; set; }
         public double UnitPrice { get; set; }
         public int UnitInStock { get; set; }
-    }
-    public enum MethodAPI : byte
-    {
-        GET = 0,
-        POST = 1,
-        PUT = 2,
-        DELETE = 3,
+        public virtual Category Category { get; set; }
+        public ICollection<OrderDetail>? OrderDetails { get; set; }
     }
 }

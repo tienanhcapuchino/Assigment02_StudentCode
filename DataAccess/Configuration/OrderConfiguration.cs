@@ -1,4 +1,4 @@
-﻿using DataAccess.Entities;
+﻿using BussinessObject.Entities;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using System;
@@ -20,6 +20,7 @@ namespace DataAccess.Configuration
             builder.Property(x => x.OrderDate);
             builder.Property(x => x.ShipDate);
             builder.Property(x => x.Freight);
+            builder.HasOne(x => x.User).WithMany(x => x.Orders).HasForeignKey(x => x.MemberId).OnDelete(DeleteBehavior.Cascade);
         }
     }
 }

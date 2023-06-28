@@ -4,11 +4,12 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace DataAccess.Models
+namespace BussinessObject.Models
 {
-    public class ProductAddModel
+    public class ProductVM
     {
-        public int CategoryId { get; set; }
+        public int ProductId { get; set; }
+        public string CategoryName { get; set; }
         public string Name { get; set; }
         public double Weight { get; set; }
         public double UnitPrice { get; set; }

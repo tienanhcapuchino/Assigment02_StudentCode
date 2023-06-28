@@ -1,8 +1,8 @@
 ﻿using AutoMapper;
 using DataAccess.DataContext;
-using DataAccess.Entities;
+using BussinessObject.Entities;
 using DataAccess.Interfaces;
-using DataAccess.Models;
+using BussinessObject.Models;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
