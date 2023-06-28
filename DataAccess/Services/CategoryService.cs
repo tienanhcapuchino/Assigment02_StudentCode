@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Microsoft.EntityFrameworkCore;
 
 namespace DataAccess.Services
 {
@@ -17,28 +18,28 @@ namespace DataAccess.Services
             _dbContext = dbContext;
         }
 
-        public bool Add(Category entity, bool saveChange = true)
+        public Task<bool> Add(Category entity, bool saveChange = true)
         {
             throw new NotImplementedException();
         }
 
-        public bool Delete(Category entity, bool saveChange = true)
+        public Task<bool> Delete(Category entity, bool saveChange = true)
         {
             throw new NotImplementedException();
         }
 
-        public List<Category> GetAll()
+        public async Task<List<Category>> GetAll()
         {
-            var result = _dbContext.Category.ToList();
+            var result = await _dbContext.Category.ToListAsync();
             return result;
         }
 
-        public Category GetById(int id)
+        public Task<Category> GetById(int id)
         {
             throw new NotImplementedException();
         }
 
-        public bool Update(Category entity, bool saveChange = true)
+        public Task<bool> Update(Category entity, bool saveChange = true)
         {
             throw new NotImplementedException();
         }

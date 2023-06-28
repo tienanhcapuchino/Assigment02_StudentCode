@@ -14,11 +14,11 @@ namespace EStoreAPI.Controllers
             _categoryService = categoryService;
         }
         [HttpGet("getall")]
-        public IActionResult Get()
+        public async Task<IActionResult> Get()
         {
             try
             {
-                var result = _categoryService.GetAll();
+                var result = await _categoryService.GetAll();
                 return Ok(result);
             }
             catch (Exception ex)

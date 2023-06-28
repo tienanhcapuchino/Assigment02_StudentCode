@@ -8,10 +8,9 @@ using System.Threading.Tasks;
 
 namespace DataAccess.Interfaces
 {
-    public interface IProductService : IRepository<Product>
+    public interface IUserService
     {
-        Task<List<ProductVM>> GetAllProducts();
-        Task<bool> DeleteProduct(int id);
-        Task<bool> AddProduct(ProductAddModel product);
+        Task<APIResponeModel> Login(UserLoginModel model);
+        Task<APIResponeModel> Register(UserRegisterModel model);
     }
 }
