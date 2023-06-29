@@ -1,4 +1,29 @@
-﻿<!DOCTYPE html>
+﻿@using System.IdentityModel.Tokens.Jwt;
+@using System.Security.Claims;
+
+@inject IHttpContextAccessor HttpContextAccessor
+
+@{
+    var httpContext = HttpContextAccessor.HttpContext;
+    var token = httpContext.Request.Cookies["token"];
+    var tokenHandler = new JwtSecurityTokenHandler();
+    string role = "";
+    string username = "";
+    if (!string.IsNullOrEmpty(token))
+    {
+        var jwtToken = tokenHandler.ReadToken(token) as JwtSecurityToken;
+        if (jwtToken != null)
+        {
+            var claims = jwtToken.Claims.ToList();
+            //var test2 = test.Select(x => x.Claims).ToList();
+            var roleClaim = claims.Where(c => c.Type.Equals("role")).FirstOrDefault();
+            var claimMail = claims.Where(c => c.Type.Equals("email")).FirstOrDefault();
+            username = claimMail.Value;
+            role = roleClaim.Value;
+        }
+    }
+}
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="utf-8" />
@@ -26,6 +51,14 @@
                             <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
                         </li>
                     </ul>
+                    @{
+                        if (token != null && role.Equals("Admin"))
+                        {
+                            <ul class="navbar-nav flex-grow-2">
+                                <li class="nav-item">Hello Admin: @username</li>
+                            </ul>
+                        }
+                    }
                 </div>
             </div>
         </nav>

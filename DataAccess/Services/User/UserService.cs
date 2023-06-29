@@ -1,19 +1,19 @@
-﻿using BussinessObject.Entities;
+﻿using AutoMapper;
+using BussinessObject.Entities;
 using BussinessObject.Models;
+using DataAccess.DataContext;
 using DataAccess.Interfaces;
 using Microsoft.AspNetCore.Identity;
-using Microsoft.EntityFrameworkCore.Metadata.Internal;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
 using System;
 using System.Collections.Generic;
-using System.Collections.Immutable;
 using System.IdentityModel.Tokens.Jwt;
 using System.Linq;
 using System.Security.Claims;
 using System.Text;
 using System.Threading.Tasks;
-using static Microsoft.EntityFrameworkCore.DbLoggerCategory;
 
 namespace DataAccess.Services
 {
@@ -24,17 +24,23 @@ namespace DataAccess.Services
         private readonly SignInManager<User> _signInManager;
         private readonly AdminAccount _admin;
         private readonly JWTSetting _jwtSetting;
+        private readonly EStoreDbContext _dbContext;
+        private readonly IMapper _map;
         public UserService(UserManager<User> userManager,
             RoleManager<IdentityRole> roleManager,
             SignInManager<User> signInManager,
             IOptionsMonitor<AdminAccount> admin,
-            IOptionsMonitor<JWTSetting> jwt)
+            IOptionsMonitor<JWTSetting> jwt,
+            EStoreDbContext eStoreDb,
+            IMapper mapper)
         {
             _userManager = userManager;
             _roleManager = roleManager;
             _signInManager = signInManager;
             _admin = admin.CurrentValue;
             _jwtSetting = jwt.CurrentValue;
+            _dbContext = eStoreDb;
+            _map = mapper;
         }
 
         public async Task<APIResponeModel> Login(UserLoginModel model)
@@ -126,15 +132,16 @@ namespace DataAccess.Services
                 return result;
             }
             var user = await _userManager.FindByEmailAsync(model.Email);
-            var userRoles = await _userManager.GetRolesAsync(user);
+            //var userRoles = await _userManager.GetRolesAsync(user);
             result = new List<Claim>()
             {
                 new(ClaimTypes.Name, user.UserName),
                 new(ClaimTypes.Email, user.Email),
                 new("UserId", user.Id),
+                new(ClaimTypes.Role, "User"),
                 new(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString()),
             };
-            result.AddRange(userRoles.Select(userRole => new Claim(ClaimTypes.Role, userRole)));
+            //result.AddRange(userRoles.Select(userRole => new Claim(ClaimTypes.Role, userRole)));
             return result;
         }
 
@@ -170,6 +177,53 @@ namespace DataAccess.Services
                     Code = 400,
                     IsSuccess = false,
                     Message = "Username or password is incorrect!",
+                };
+            }
+            return result;
+        }
+
+        public async Task<APIResponeModel> UpdateProfile(string userId, UserProfileModel model)
+        {
+            APIResponeModel result = new APIResponeModel()
+            {
+                Code = 200,
+                Message = "OK",
+                Data = model,
+                IsSuccess = true
+            };
+            var userEntity = await _userManager.FindByIdAsync(userId);
+            if (userEntity == null)
+            {
+                return new APIResponeModel()
+                {
+                    Code = 404,
+                    Message = $"cannot find user with userId: {userId}",
+                    IsSuccess = false,
+                    Data = model
+                };
+            }
+            var userEmails = await _dbContext.Users.Where(x => x.Id.Equals(userId) && !x.Email.Equals(userEntity.Email) && x.Email.Equals(model.Email)).ToListAsync();
+            if (userEmails != null && userEmails.Any())
+                return new APIResponeModel()
+                {
+                    Code = 400,
+                    Message = "Email has been already existed!",
+                    Data = model,
+                    IsSuccess = false,
+                };
+            //var userUpdate = _map.Map<User>(model);
+            userEntity.Email = model.Email;
+            userEntity.UserName = model.Username;
+            userEntity.PhoneNumber = model.PhoneNumber;
+            var resUpdate = await _userManager.UpdateAsync(userEntity);
+            if (!resUpdate.Succeeded)
+            {
+                return new APIResponeModel()
+                {
+                    Code = 400,
+                    Message = "update failed",
+                    Data = resUpdate.Errors.ToList(),
+                    IsSuccess = false,
                 };
             }
             return result;

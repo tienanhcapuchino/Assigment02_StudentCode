@@ -52,5 +52,26 @@ namespace EStoreAPI.Controllers
                 };
             }
         }
+
+        [HttpPut("profile/{userId}")]
+        public async Task<APIResponeModel> UpdateProfile([FromRoute] string userId, [FromBody] UserProfileModel model)
+        {
+            try
+            {
+                var result = await _userService.UpdateProfile(userId, model);
+                return result;
+            }
+            catch (Exception ex)
+            {
+                return new APIResponeModel()
+                {
+                    Code = 400,
+                    Message = ex.Message,
+                    Data = ex,
+                    IsSuccess = false
+                };
+            }
+        }
+
     }
 }

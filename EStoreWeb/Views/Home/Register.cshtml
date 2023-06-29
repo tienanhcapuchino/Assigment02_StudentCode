@@ -10,7 +10,7 @@
                     <h4>Register</h4>
                 </div>
                 <div class="card-body">
-                    <form>
+                    <form asp-controller="Home" asp-action="DoRegister">
                         <div class="form-group">
                             <label for="username">Email</label>
                             <input asp-for="Email" type="email" class="form-control" id="username" placeholder="Enter email">
@@ -30,9 +30,9 @@
                         <br />
                         <button type="submit" class="btn btn-primary">Register</button>
                         @{
-                            if (ViewBag.ErrorMessage != null)
+                            if (ViewBag.RegisterFailed != null)
                             {
-                                <span class="text-danger">@ViewBag.ErrorMessage</span>
+                                <span class="text-danger">@ViewBag.RegisterFailed</span>
                             }
                         }
                     </form>

@@ -12,5 +12,6 @@ namespace DataAccess.Interfaces
     {
         Task<APIResponeModel> Login(UserLoginModel model);
         Task<APIResponeModel> Register(UserRegisterModel model);
+        Task<APIResponeModel> UpdateProfile(string userId, UserProfileModel model);
     }
 }

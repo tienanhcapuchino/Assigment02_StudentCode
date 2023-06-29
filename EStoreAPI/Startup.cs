@@ -27,10 +27,7 @@ namespace EStoreAPI
         {
             services.AddEndpointsApiExplorer();
             services.AddSwaggerGen();
-            services.AddControllers().AddJsonOptions(options =>
-            {
-                options.JsonSerializerOptions.ReferenceHandler = ReferenceHandler.Preserve;
-            });
+            services.AddControllers();
             services.AddCors(options =>
             {
                 options.AddPolicy("CorsPolicy", build => build.AllowAnyMethod()

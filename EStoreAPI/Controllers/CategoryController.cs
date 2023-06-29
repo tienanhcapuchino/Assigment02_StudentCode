@@ -1,4 +1,5 @@
-﻿using DataAccess.Interfaces;
+﻿using BussinessObject.Entities;
+using DataAccess.Interfaces;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -15,18 +16,18 @@ namespace EStoreAPI.Controllers
         {
             _categoryService = categoryService;
         }
-        [Authorize(Roles = "Admin")]
+        //[Authorize(Roles = "Admin")]
         [HttpGet("getall")]
-        public async Task<IActionResult> Get()
+        public async Task<List<Category>> Get()
         {
             try
             {
                 var result = await _categoryService.GetAll();
-                return Ok(result);
+                return result;
             }
             catch (Exception ex)
             {
-                return BadRequest(ex.Message);
+                return new List<Category>();
             }
         }
     }
