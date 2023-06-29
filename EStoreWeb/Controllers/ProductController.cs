@@ -9,8 +9,8 @@ namespace EStoreWeb.Controllers
     public class ProductController : Controller
     {
         private readonly ILogger<ProductController> _logger;
-        //[BindProperty]
-        //public ProductAddModel AddModel { get; set; }
+        [BindProperty]
+        public ProductAddModel AddModel { get; set; }
         public ProductController(ILogger<ProductController> logger)
         {
             _logger = logger;
@@ -29,6 +29,7 @@ namespace EStoreWeb.Controllers
         }
         public IActionResult OnAdd(ProductAddModel productModel)
         {
+            productModel = AddModel;
             return View();
         }
     }

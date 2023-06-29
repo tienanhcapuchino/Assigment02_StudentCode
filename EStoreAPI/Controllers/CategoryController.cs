@@ -1,6 +1,8 @@
 ﻿using DataAccess.Interfaces;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using System.Data;
 
 namespace EStoreAPI.Controllers
 {
@@ -13,6 +15,7 @@ namespace EStoreAPI.Controllers
         {
             _categoryService = categoryService;
         }
+        [Authorize(Roles = "Admin")]
         [HttpGet("getall")]
         public async Task<IActionResult> Get()
         {

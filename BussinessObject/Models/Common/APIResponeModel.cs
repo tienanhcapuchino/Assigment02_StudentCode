@@ -13,4 +13,11 @@ namespace BussinessObject.Models
         public bool IsSuccess { get; set; }
         public object Data { get; set; }
     }
+    public enum MethodAPI : byte
+    {
+        GET = 0,
+        POST = 1,
+        PUT = 2,
+        DELETE = 3,
+    }
 }
