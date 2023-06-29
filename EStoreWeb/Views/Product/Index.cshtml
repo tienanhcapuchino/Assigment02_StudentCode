@@ -8,7 +8,7 @@
 <h1>List All Products</h1>
 <a class="btn btn-primary" asp-controller="Product" asp-action="Add">Add new product</a>
 <div>
-    @*<table class="table">
+    <table class="table">
         <thead>
             <tr>
                 <th>ID</th>
@@ -20,19 +20,10 @@
                 <th>Action</th>
             </tr>
         </thead>
-        <tbody>
-            @foreach (ProductVM s in @Model)
-            {
-                <tr>
-                    <td>@s.ProductId</td>
-                    <td>@s.CategoryName</td>
-                    <td>@s.Name</td>
-                    <td>@s.UnitPrice</td>
-                    <td>@s.UnitInStock</td>
-                    <td>@s.Weight</td>
-                    <td><a asp-controller="product" asp-action="delete" asp-route-id="@s.ProductId">Delete</a></td>
-                </tr>
-            }
+        <tbody id="productTable">
+            
         </tbody>
-    </table>*@
+    </table>
 </div>
+
+<script src="~/js/products/productmanager.js"></script>

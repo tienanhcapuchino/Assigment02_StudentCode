@@ -157,6 +157,10 @@ namespace DataAccess.Services
                         Message = "Username or password is incorrect!",
                     };
                 }
+                else
+                {
+                    return result;
+                }
             }
             var userIdentity = await _userManager.FindByEmailAsync(user.Email);
             if (userIdentity == null || !await _userManager.CheckPasswordAsync(userIdentity, user.Password))

@@ -1,19 +1,13 @@
-﻿@*
-    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
-*@
-@{
-}
+﻿@using BussinessObject.Entities;
+@model BussinessObject.Models.ProductAddModel
 @addTagHelper *,Microsoft.AspNetCore.Mvc.TagHelpers
-@using BussinessObject.Entities;
-@using BussinessObject.Models;
-@model List<Category>
 
 <form class="form-control" asp-controller="Product" asp-action="OnAdd">
-    <input name="productModel.Name" required class="form-control" type="text" placeholder="enter product name" />
+    <input asp-for="Name" required class="form-control" type="text" placeholder="enter product name" />
     <br />
-    <input name="productModel.UnitInStock" required class="form-control" type="number" placeholder="enter unit in stock" />
+    <input asp-for="UnitInStock" required class="form-control" type="number" placeholder="enter unit in stock" />
     <br />
-    <select name="productModel.CategoryId" class="form-control">
+    <select asp-for="CategoryId" class="form-control">
         @{
             //foreach(var item in Model)
             //{
@@ -21,7 +15,7 @@
             //}
         }
     </select>
-    <input name="productModel.UnitPrice" required type="number" step="any" placeholder="enter unit price" class="form-control">
-    <input name="productModel.Weight" required type="number" step="any" placeholder="enter weight" class="form-control">
+    <input asp-for="UnitPrice" required type="number" step="any" placeholder="enter unit price" class="form-control">
+    <input asp-for="Weight" required type="number" step="any" placeholder="enter weight" class="form-control">
     <input class="btn btn-primary" type="submit" value="Add" />
 </form>

@@ -2,6 +2,7 @@
 using BussinessObject.Models;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Authorization;
 
 namespace EStoreAPI.Controllers
 {
@@ -14,6 +15,7 @@ namespace EStoreAPI.Controllers
         {
             _productService = productService;
         }
+        [Authorize]
         [HttpGet("getall")]
         public async Task<IActionResult> GetAllProducts()
         {
@@ -27,6 +29,7 @@ namespace EStoreAPI.Controllers
                 return BadRequest(ex.Message);
             }
         }
+        [Authorize(Roles = "Admin")]
         [HttpDelete("{id}")]
         public async Task<IActionResult> Delete([FromRoute] int id)
         {
@@ -39,6 +42,7 @@ namespace EStoreAPI.Controllers
                 return BadRequest(ex.Message);
             }
         }
+        [Authorize(Roles = "Admin")]
         [HttpPost("add")]
         public async Task<IActionResult> Add([FromBody] ProductAddModel model)
         {

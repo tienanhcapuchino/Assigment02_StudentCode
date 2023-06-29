@@ -1,8 +1,7 @@
-﻿@*
-    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
-*@
-@{
-}
+﻿
+@addTagHelper *,Microsoft.AspNetCore.Mvc.TagHelpers
+@model BussinessObject.Models.UserRegisterModel
+
 <div class="container">
     <div class="row justify-content-center">
         <div class="col-md-6">
@@ -13,15 +12,29 @@
                 <div class="card-body">
                     <form>
                         <div class="form-group">
-                            <label for="username">Username</label>
-                            <input type="text" class="form-control" id="username" placeholder="Enter username">
+                            <label for="username">Email</label>
+                            <input asp-for="Email" type="email" class="form-control" id="username" placeholder="Enter email">
+                        </div>
+                        <div class="form-group">
+                            <label for="password">Username</label>
+                            <input type="text" asp-for="Username" class="form-control" id="password" placeholder="Enter username">
                         </div>
                         <div class="form-group">
                             <label for="password">Password</label>
-                            <input type="password" class="form-control" id="password" placeholder="Enter password">
+                            <input asp-for="Password" type="password" class="form-control" id="password" placeholder="Enter password">
+                        </div>
+                        <div class="form-group">
+                            <label for="password">Re-Password</label>
+                            <input asp-for="ConfirmPassword" type="password" class="form-control" id="password" placeholder="Enter re-password">
                         </div>
                         <br />
                         <button type="submit" class="btn btn-primary">Register</button>
+                        @{
+                            if (ViewBag.ErrorMessage != null)
+                            {
+                                <span class="text-danger">@ViewBag.ErrorMessage</span>
+                            }
+                        }
                     </form>
                 </div>
             </div>
