@@ -15,7 +15,7 @@ namespace EStoreAPI.Controllers
         {
             _productService = productService;
         }
-        [Authorize]
+        //[Authorize]
         [HttpGet("getall")]
         public async Task<IActionResult> GetAllProducts()
         {
@@ -26,7 +26,7 @@ namespace EStoreAPI.Controllers
             }
             catch (Exception ex)
             {
-                return BadRequest(ex.Message);
+                return BadRequest(ex.ToString());
             }
         }
         [Authorize(Roles = "Admin")]

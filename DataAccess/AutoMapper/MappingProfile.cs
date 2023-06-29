@@ -17,6 +17,7 @@ namespace DataAccess.AutoMapper
             CreateMap<Product, ProductVM>()
                 .ForMember(dest => dest.CategoryName, opt => opt.MapFrom(src => src.Category.CategoryName));
             CreateMap<ProductAddModel, Product>();
+            CreateMap<UserProfileModel, User>();
             #endregion
         }
     }
