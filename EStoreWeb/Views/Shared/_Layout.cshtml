@@ -1,26 +1,17 @@
 ﻿@using System.IdentityModel.Tokens.Jwt;
 @using System.Security.Claims;
+@using EStoreWeb.Services;
 
-@inject IHttpContextAccessor HttpContextAccessor
+@inject ICommonService commonService
 
 @{
-    var httpContext = HttpContextAccessor.HttpContext;
-    var token = httpContext.Request.Cookies["token"];
-    var tokenHandler = new JwtSecurityTokenHandler();
+    var tokenModel = commonService.GetTokenData().GetAwaiter().GetResult();
     string role = "";
     string username = "";
-    if (!string.IsNullOrEmpty(token))
+    if (tokenModel != null)
     {
-        var jwtToken = tokenHandler.ReadToken(token) as JwtSecurityToken;
-        if (jwtToken != null)
-        {
-            var claims = jwtToken.Claims.ToList();
-            //var test2 = test.Select(x => x.Claims).ToList();
-            var roleClaim = claims.Where(c => c.Type.Equals("role")).FirstOrDefault();
-            var claimMail = claims.Where(c => c.Type.Equals("email")).FirstOrDefault();
-            username = claimMail.Value;
-            role = roleClaim.Value;
-        }
+        role = tokenModel.RoleName;
+        username = tokenModel.Email;
     }
 }
 <!DOCTYPE html>
@@ -52,10 +43,15 @@
                         </li>
                     </ul>
                     @{
-                        if (token != null && role.Equals("Admin"))
+                        if (!string.IsNullOrEmpty(role) && !string.IsNullOrEmpty(username))
                         {
                             <ul class="navbar-nav flex-grow-2">
                                 <li class="nav-item">Hello Admin: @username</li>
+                                <li class="nav-item">
+                                    <form>
+                                        <input class="btn btn-primary" type="submit" value="Logout" />
+                                    </form>
+                                </li>
                             </ul>
                         }
                     }
