@@ -13,7 +13,7 @@ namespace BussinessObject.Models
         [Required]
         [EmailAddress]
         public string Email { get; set; }
-        [Required]
+        //[Required]
         public string Username { get; set; }
 
         [Required]
@@ -21,7 +21,7 @@ namespace BussinessObject.Models
         [DataType(DataType.Password)]
         public string Password { get; set; }
 
-        [Required]
+        //[Required]
         [DataType(DataType.Password)]
         [Display(Name = "Confirm Password")]
         [Compare("Password", ErrorMessage = "Password and confirmation password not match")]

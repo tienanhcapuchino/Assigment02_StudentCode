@@ -47,6 +47,11 @@ namespace DataAccess.Services
         {
             var secretKeyBytes = Encoding.UTF8.GetBytes(_jwtSetting.Key);
             var jwtTokenHandler = new JwtSecurityTokenHandler();
+            var result = await ValidLogin(model);
+            if (!result.IsSuccess)
+            {
+                return result;
+            }
             var claims = await GetClaimsUsers(model);
             var tokenDecription = new SecurityTokenDescriptor()
             {
@@ -58,7 +63,6 @@ namespace DataAccess.Services
             };
             var token = jwtTokenHandler.CreateToken(tokenDecription);
             string accessToken = jwtTokenHandler.WriteToken(token);
-            var result = await ValidLogin(model);
             if (!result.IsSuccess) return result;
             result.Data = accessToken;
             return result;
