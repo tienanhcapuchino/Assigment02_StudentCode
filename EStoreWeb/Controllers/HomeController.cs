@@ -64,7 +64,7 @@ namespace EStoreWeb.Controllers
         {
             return View("/Views/Home/Register.cshtml");
         }
-        
+
         public async Task<IActionResult> Login(UserLoginModel model)
         {
             try
@@ -79,7 +79,9 @@ namespace EStoreWeb.Controllers
                     if (result.Code == 200)
                     {
                         Response.Cookies.Append("token", result.Data.ToString());
-                        return Redirect("../Product/Index");
+                        if (model.Email.Equals("admin@estore.com"))
+                            return Redirect("../Product/Index");
+                        return Redirect("../Product/ProductUser");
                     }
                     else
                     {
@@ -130,6 +132,12 @@ namespace EStoreWeb.Controllers
                 TempData["RegisterFail"] = resultError.Message;
                 return RedirectToAction("Register");
             }
+        }
+
+        public IActionResult Logout()
+        {
+            _commonService.Logout();
+            return RedirectToAction("Index");
         }
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]

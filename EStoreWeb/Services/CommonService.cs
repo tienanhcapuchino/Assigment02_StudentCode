@@ -35,5 +35,10 @@ namespace EStoreWeb.Services
             }
             return null;
         }
+
+        public void Logout()
+        {
+            _contextAccessor.HttpContext.Response.Cookies.Delete("token");
+        }
     }
 }

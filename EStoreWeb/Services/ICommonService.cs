@@ -5,5 +5,6 @@ namespace EStoreWeb.Services
     public interface ICommonService
     {
         Task<TokenOutputModel> GetTokenData();
+        void Logout();
     }
 }
