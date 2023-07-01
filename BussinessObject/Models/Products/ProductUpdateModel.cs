@@ -6,11 +6,8 @@ using System.Threading.Tasks;
 
 namespace BussinessObject.Models
 {
-    public class ProductVM
+    public class ProductUpdateModel
     {
-        public int ProductId { get; set; }
-        public int CategoryId { get; set; }
-        public string CategoryName { get; set; }
         public string Name { get; set; }
         public double Weight { get; set; }
         public double UnitPrice { get; set; }

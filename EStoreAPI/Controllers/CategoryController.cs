@@ -16,18 +16,18 @@ namespace EStoreAPI.Controllers
         {
             _categoryService = categoryService;
         }
-        //[Authorize(Roles = "Admin")]
+        [Authorize]
         [HttpGet("getall")]
-        public async Task<List<Category>> Get()
+        public async Task<IActionResult> Get()
         {
             try
             {
                 var result = await _categoryService.GetAll();
-                return result;
+                return Ok(result);
             }
             catch (Exception ex)
             {
-                return new List<Category>();
+                return BadRequest(ex.Message);
             }
         }
     }
