@@ -6,5 +6,6 @@ namespace EStoreWeb.Services
     {
         Task<TokenOutputModel> GetTokenData();
         void Logout();
+        string GetToken();
     }
 }

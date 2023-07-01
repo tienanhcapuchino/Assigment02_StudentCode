@@ -232,5 +232,12 @@ namespace DataAccess.Services
             }
             return result;
         }
+        public async Task<UserProfileModel> GetUserProfile(string id)
+        {
+            var userEntity = await _userManager.FindByIdAsync(id);
+            if (userEntity == null) return null;
+            var result = _map.Map<UserProfileModel>(userEntity);
+            return result;
+        }
     }
 }

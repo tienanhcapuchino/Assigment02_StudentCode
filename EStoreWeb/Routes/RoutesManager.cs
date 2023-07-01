@@ -15,6 +15,7 @@
         #region user
         public static string Login = $"{GetUrlPattern(EndPoint.User)}/login";
         public static string Register = $"{GetUrlPattern(EndPoint.User)}/register";
+        public static string UserProfile = $"{GetUrlPattern(EndPoint.User)}/profile";
         #endregion
     }
     public enum EndPoint

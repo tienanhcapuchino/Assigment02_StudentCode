@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net.Http.Headers;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -9,9 +10,13 @@ namespace DataAccess.Services
 {
     public static class CommonService
     {
-        public static HttpResponseMessage GetDataAPI(string url, MethodAPI method, string? jsonData = null)
+        public static HttpResponseMessage GetDataAPI(string url, MethodAPI method, string token, string? jsonData = null)
         {
             HttpClient client = new HttpClient();
+            if (!string.IsNullOrEmpty(token))
+            {
+                client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
+            }
             HttpResponseMessage respone = new HttpResponseMessage();
             if (method == MethodAPI.GET)
             {

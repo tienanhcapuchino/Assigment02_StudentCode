@@ -71,7 +71,7 @@ namespace EStoreWeb.Controllers
             {
                 model = LoginModel;
                 string jsonData = JsonConvert.SerializeObject(model);
-                HttpResponseMessage respone = DataAccess.Services.CommonService.GetDataAPI(RoutesManager.Login, MethodAPI.POST, jsonData);
+                HttpResponseMessage respone = DataAccess.Services.CommonService.GetDataAPI(RoutesManager.Login, MethodAPI.POST, "", jsonData);
                 if (respone.IsSuccessStatusCode)
                 {
                     var dataResult = await respone.Content.ReadAsStringAsync();
@@ -109,7 +109,7 @@ namespace EStoreWeb.Controllers
             model = RegisterModel;
             string jsonData = JsonConvert.SerializeObject(model);
 
-            HttpResponseMessage respone = DataAccess.Services.CommonService.GetDataAPI(RoutesManager.Register, MethodAPI.POST, jsonData);
+            HttpResponseMessage respone = DataAccess.Services.CommonService.GetDataAPI(RoutesManager.Register, MethodAPI.POST, "", jsonData);
             if (respone.IsSuccessStatusCode)
             {
                 var dataResult = await respone.Content.ReadAsStringAsync();
