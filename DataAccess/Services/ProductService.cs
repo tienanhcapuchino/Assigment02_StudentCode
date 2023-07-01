@@ -81,7 +81,7 @@ namespace DataAccess.Services
 
         public async Task<Product> GetById(int id)
         {
-            return await _dbContext.Products.FirstOrDefaultAsync(x => x.ProductId == id);
+            return await _dbContext.Products.Include(x => x.OrderDetails).FirstOrDefaultAsync(x => x.ProductId == id);
         }
 
         public Task<bool> Update(Product entity, bool saveChange = true)
