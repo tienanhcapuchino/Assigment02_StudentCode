@@ -10,28 +10,37 @@ function getTokenFromCookie() {
 	}
 	return null;
 }
-//$(document).ready(() => {
-//    let token = getTokenFromCookie();
-//    console.log(token);
-//});
 
-//console.log(getTokenFromCookie());
+var token = getTokenFromCookie();
+
+$(document).ready(() => {
+	LoadProduct();
+	if (token !== null) {
+		$("#add-prod-button").append(
+			`<button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">
+								Add Product
+							</button>`
+		);
+	}
+});
 
 function LoadProduct() {
 	$.ajax({
 		url: "http://localhost:5063/api/Product/getall",
 		method: "GET",
 		contentType: "application/json",
+		headers: {
+			Authorization: "Bearer " + token,
+		},
 		success: (response) => {
 			$("#productTable").empty();
-			// if (role === "Admin") {
 				$("#productTable").append(
 					response.map(
 						(product) => (
 							`<tr>
 								<th scope="row">${product.productId}</th>
 									<td>${product.categoryName}</td>
-									<td>${product.Name}</td>
+									<td>${product.name}</td>
 									<td>${product.weight}</td>
 									<td>${product.unitPrice}$</td>
 									<td>${product.unitInStock}</td>
@@ -48,25 +57,6 @@ function LoadProduct() {
 						)
 					)
 				);
-			// } else {
-			// 	$("#product-table").append(
-			// 		response.map(
-			// 			(product) => (
-			// 				`<tr>
-			// 					<th scope="row">${product.productId}</th>
-			// 					<td>${product.category}</td>
-			// 					<td>${product.productName}</td>
-			// 					<td>${product.weight}</td>
-			// 					<td>${product.unitPrice}$</td>
-			// 					<td>${product.unitInStock}</td>
-			// 					<td>
-			// 						<i class="fa-solid fa-cart-shopping"></i>
-			// 					</td>
-			// 				</tr>`
-			// 			)
-			// 		)
-			// 	);
-			// }
 		},
 		error: function (xhr, status, error) {
 			console.log(error);
@@ -74,7 +64,3 @@ function LoadProduct() {
 		},
 	});
 }
-
-$(document).ready(() => {
-	LoadProduct();
-});

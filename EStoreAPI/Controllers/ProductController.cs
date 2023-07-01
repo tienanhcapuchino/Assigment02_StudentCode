@@ -15,7 +15,7 @@ namespace EStoreAPI.Controllers
         {
             _productService = productService;
         }
-        //[Authorize]
+        [Authorize]
         [HttpGet("getall")]
         public async Task<IActionResult> GetAllProducts()
         {

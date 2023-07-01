@@ -36,7 +36,7 @@ namespace EStoreWeb.Controllers
             return BadRequest();
         }
 
-        public async Task<IActionResult> Update(string id)
+        public async Task<IActionResult> Update()
         {
             var token = _commonService.GetToken();
             if (string.IsNullOrEmpty(token))
@@ -44,7 +44,7 @@ namespace EStoreWeb.Controllers
                 return Redirect("../Home/Index");
             }
             string jsonData = JsonConvert.SerializeObject(Profile);
-            var respone = DataAccess.Services.CommonService.GetDataAPI($"{RoutesManager.UserProfile}/{id}", MethodAPI.PUT, token, jsonData);
+            var respone = DataAccess.Services.CommonService.GetDataAPI($"{RoutesManager.UserProfile}/{Profile.Id}", MethodAPI.PUT, token, jsonData);
             if (respone.StatusCode == System.Net.HttpStatusCode.Unauthorized)
             {
                 return Unauthorized();
