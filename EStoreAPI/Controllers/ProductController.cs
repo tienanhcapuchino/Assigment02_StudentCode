@@ -55,5 +55,19 @@ namespace EStoreAPI.Controllers
                 return BadRequest(ex.Message);
             }
         }
+        [Authorize(Roles = "Admin")]
+        [HttpPut("update/{productId}")]
+        public async Task<IActionResult> Update([FromRoute] int productId, [FromBody] ProductUpdateModel model)
+        {
+            try
+            {
+                bool result = await _productService.UpdateProduct(productId, model);
+                return Ok(result);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
+        }
     }
 }

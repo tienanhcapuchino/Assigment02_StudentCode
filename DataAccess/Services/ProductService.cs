@@ -84,9 +84,28 @@ namespace DataAccess.Services
             return await _dbContext.Products.Include(x => x.OrderDetails).FirstOrDefaultAsync(x => x.ProductId == id);
         }
 
-        public Task<bool> Update(Product entity, bool saveChange = true)
+        public async Task<bool> Update(Product entity, bool saveChange = true)
         {
-            throw new NotImplementedException();
+            _dbContext.Update(entity);
+            bool result = true;
+            if (saveChange)
+            {
+                result = await _dbContext.SaveChangesAsync() > 0;
+            }
+            return result;
+        }
+
+        public async Task<bool> UpdateProduct(int productId, ProductUpdateModel model)
+        {
+            if (string.IsNullOrEmpty(model.Name)) return false;
+            var entity = await GetById(productId);
+            if (entity == null) return false;
+            entity.UnitPrice = model.UnitPrice;
+            entity.UnitInStock = model.UnitInStock;
+            entity.Name = model.Name;
+            entity.Weight = model.Weight;
+            bool result = await Update(entity);
+            return result;
         }
     }
 }

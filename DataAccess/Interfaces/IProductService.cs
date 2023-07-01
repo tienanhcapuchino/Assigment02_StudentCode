@@ -13,5 +13,6 @@ namespace DataAccess.Interfaces
         Task<List<ProductVM>> GetAllProducts();
         Task<bool> DeleteProduct(int id);
         Task<bool> AddProduct(ProductAddModel product);
+        Task<bool> UpdateProduct(int productId, ProductUpdateModel model);
     }
 }
