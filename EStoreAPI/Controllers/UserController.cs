@@ -1,5 +1,6 @@
 ﻿using BussinessObject.Models;
 using DataAccess.Interfaces;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
@@ -98,6 +99,23 @@ namespace EStoreAPI.Controllers
                 };
             }
         }
-
+        [Authorize(Roles = "User")]
+        [HttpGet("profile/{userId}")]
+        public async Task<IActionResult> GetUserProfile([FromRoute] string userId)
+        {
+            try
+            {
+                var user = await _userService.GetUserProfile(userId);
+                if (user == null)
+                {
+                    return NotFound();
+                }
+                return Ok(user);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
+        }
     }
 }

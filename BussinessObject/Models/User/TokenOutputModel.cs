@@ -12,5 +12,6 @@ namespace BussinessObject.Models.User
         public string Username { get; set; }
         public long ExpiredTime { get; set; }
         public string RoleName { get; set; }
+        public string UserId { get; set; }
     }
 }

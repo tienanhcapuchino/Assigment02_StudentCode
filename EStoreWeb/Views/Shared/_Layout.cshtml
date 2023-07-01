@@ -8,10 +8,15 @@
     var tokenModel = commonService.GetTokenData().GetAwaiter().GetResult();
     string role = "";
     string username = "";
+    string userId = "";
     if (tokenModel != null)
     {
         role = tokenModel.RoleName;
         username = tokenModel.Email;
+        if (!string.IsNullOrEmpty(tokenModel.UserId))
+        {
+            userId = tokenModel.UserId;
+        }
     }
 }
 <!DOCTYPE html>
@@ -55,6 +60,18 @@
                                 <li class="nav-item">
                                     <form asp-controller="Home" asp-action="Logout">
                                         <input class="btn btn-primary" type="submit" value="Logout" />
+                                    </form>
+                                </li>
+                            </ul>
+                        }
+                    }
+                    @{
+                        if (!string.IsNullOrEmpty(role) && role.Equals("User"))
+                        {
+                            <ul class="navbar-nav flex-grow-2">
+                                <li class="nav-item">
+                                    <form asp-controller="User" asp-route-id="@userId" asp-action="Index">
+                                        <input class="btn btn-primary" type="submit" value="Your profile" />
                                     </form>
                                 </li>
                             </ul>

@@ -10,6 +10,13 @@ namespace EStoreWeb.Services
         {
             _contextAccessor = contextAccessor;
         }
+
+        public string GetToken()
+        {
+            var token = _contextAccessor.HttpContext.Request.Cookies["token"];
+            return token;
+        }
+
         public async Task<TokenOutputModel> GetTokenData()
         {
             var token = _contextAccessor.HttpContext.Request.Cookies["token"];
@@ -30,6 +37,12 @@ namespace EStoreWeb.Services
                         ExpiredTime = expDate,
                         RoleName = roleClaim,
                     };
+
+                    var userIdClaims = claims.Where(c => c.Type.Equals("UserId")).FirstOrDefault();
+                    if (userIdClaims != null)
+                    {
+                        result.UserId = userIdClaims.Value;
+                    }
                     return await Task.FromResult(result);
                 }
             }
