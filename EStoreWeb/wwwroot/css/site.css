@@ -16,3 +16,10 @@ html {
 body {
   margin-bottom: 60px;
 }
+
+.nav-item {
+  margin-left: 10px;
+}
+li .fa-cart-shopping {
+  font-size: 30px;
+}

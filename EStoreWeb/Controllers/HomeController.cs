@@ -32,9 +32,13 @@ namespace EStoreWeb.Controllers
             var tokenModel = await _commonService.GetTokenData();
             if (tokenModel != null)
             {
-                if (tokenModel.ExpiredTime < DateTime.Now.Ticks)
+                if (tokenModel.ExpiredTime < DateTime.Now.Ticks && tokenModel.RoleName.Equals("Admin"))
                 {
                     return Redirect("../Product/Index");
+                }
+                if (tokenModel.ExpiredTime < DateTime.Now.Ticks && tokenModel.RoleName.Equals("User"))
+                {
+                    return Redirect("../Product/ProductUser");
                 }
             }
             if (TempData["ErrorMessage"] != null)

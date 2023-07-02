@@ -26,21 +26,13 @@ namespace EStoreWeb.Controllers
             {
                 return Redirect("../Home/Index");
             }
+            if (tokenModel.ExpiredTime < DateTime.UtcNow.Ticks && tokenModel.RoleName.Equals("User"))
+            {
+                return RedirectToAction("ProductUser");
+            }
             return View();
         }
-        public IActionResult Delete(int id)
-        {
-            return View();
-        }
-        public IActionResult Add()
-        {
-            return View();
-        }
-        public IActionResult OnAdd(ProductAddModel productModel)
-        {
-            productModel = AddModel;
-            return View();
-        }
+        
         public IActionResult ProductUser()
         {
             return View();

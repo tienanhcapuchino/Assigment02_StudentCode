@@ -56,22 +56,25 @@
                         if (!string.IsNullOrEmpty(role) && !string.IsNullOrEmpty(username))
                         {
                             <ul class="navbar-nav flex-grow-2">
-                                <li class="nav-item">Welcome back: @username</li>
+                                @if (!string.IsNullOrEmpty(role) && role.Equals("User"))
+                                {
+                                    <li class="nav-item">Welcome back user: @username</li>
+                                    <li class="nav-item"><a asp-controller="Cart" asp-action="Index"><i class="fa-solid fa-cart-shopping"></i></a></li>
+                                    <li class="nav-item">
+                                        <form asp-controller="User" asp-route-id="@userId" asp-action="Index">
+                                            <input class="btn btn-primary" type="submit" value="Your profile" />
+                                        </form>
+                                    </li>
+                                }
+                                @if (!string.IsNullOrEmpty(role) && role.Equals("Admin"))
+                                {
+                                    <li class="nav-item">Welcome back admin: @username</li>
+                                    <li class="nav-item"><a asp-controller="Product" asp-action="Index">Product Manager</a></li>
+                                    <li class="nav-item"><a asp-controller="Order" asp-action="Index">Order Manager</a></li>
+                                }
                                 <li class="nav-item">
                                     <form asp-controller="Home" asp-action="Logout">
                                         <input class="btn btn-primary" type="submit" value="Logout" />
-                                    </form>
-                                </li>
-                            </ul>
-                        }
-                    }
-                    @{
-                        if (!string.IsNullOrEmpty(role) && role.Equals("User"))
-                        {
-                            <ul class="navbar-nav flex-grow-2">
-                                <li class="nav-item">
-                                    <form asp-controller="User" asp-route-id="@userId" asp-action="Index">
-                                        <input class="btn btn-primary" type="submit" value="Your profile" />
                                     </form>
                                 </li>
                             </ul>

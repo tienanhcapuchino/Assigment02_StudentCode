@@ -1,0 +1,7 @@
+function LoadAllOrders() {
+
+}
+
+$(document).ready(() => {
+
+});

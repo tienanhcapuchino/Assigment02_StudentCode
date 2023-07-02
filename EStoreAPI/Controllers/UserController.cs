@@ -85,6 +85,19 @@ namespace EStoreAPI.Controllers
         {
             try
             {
+                if (!ModelState.IsValid)
+                {
+                    var errors = ModelState.Values.SelectMany(v => v.Errors)
+                                        .Select(e => e.ErrorMessage)
+                                        .ToList();
+                    return new APIResponeModel()
+                    {
+                        Code = 400,
+                        Data = errors,
+                        IsSuccess = false,
+                        Message = string.Join(";", errors)
+                    };
+                }
                 var result = await _userService.UpdateProfile(userId, model);
                 return result;
             }

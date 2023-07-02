@@ -27,6 +27,14 @@ namespace EStoreWeb.Controllers
             {
                 var dataResult = await respone.Content.ReadAsStringAsync();
                 var profile = JsonConvert.DeserializeObject<UserProfileModel>(dataResult);
+                if (TempData["Success"] != null)
+                {
+                    ViewBag.Success = TempData["Success"] as string;
+                }
+                if (TempData["Error"] != null)
+                {
+                    ViewBag.Error = TempData["Error"] as string;
+                }
                 return View(profile);
             }
             if (respone.StatusCode == System.Net.HttpStatusCode.Unauthorized)
@@ -55,13 +63,13 @@ namespace EStoreWeb.Controllers
                 APIResponeModel result = JsonConvert.DeserializeObject<APIResponeModel>(dataResult);
                 if (result.IsSuccess)
                 {
-                    ViewBag.Success = "Update successfully";
-                    return RedirectToAction("Index");
+                    TempData["Success"] = "Update successfully";
+                    return RedirectToAction("Index", new { id = Profile.Id });
                 }
                 else
                 {
-                    ViewBag.Error = result.Message; 
-                    return RedirectToAction("Index");
+                    TempData["Error"] = result.Message;
+                    return RedirectToAction("Index", new { id = Profile.Id });
                 }
             }
             return RedirectToAction("Index");
