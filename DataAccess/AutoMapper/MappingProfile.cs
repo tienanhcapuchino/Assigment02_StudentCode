@@ -18,7 +18,12 @@ namespace DataAccess.AutoMapper
                 .ForMember(dest => dest.CategoryName, opt => opt.MapFrom(src => src.Category.CategoryName))
                 .ForMember(dest => dest.CategoryId, opt => opt.MapFrom(src => src.CategoryId));
             CreateMap<ProductAddModel, Product>();
+            #endregion
             CreateMap<User, UserProfileModel>().ReverseMap();
+            #region order
+            CreateMap<OrderAddModel, Order>();
+            CreateMap<Order, OrderVM>()
+                .ForMember(dest => dest.Username, opt => opt.MapFrom(src => src.User.UserName)).ReverseMap();
             #endregion
         }
     }

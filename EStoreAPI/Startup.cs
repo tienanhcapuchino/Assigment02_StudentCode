@@ -46,6 +46,7 @@ namespace EStoreAPI
             services.AddTransient<IProductService, ProductService>();
             services.AddTransient<ICategoryService, CategoryService>();
             services.AddTransient<IUserService, UserService>();
+            services.AddTransient<IOrderService, OrderService>();
         }
         private void ConfigureJwt(IServiceCollection services)
         {

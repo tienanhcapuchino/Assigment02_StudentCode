@@ -1,6 +1,174 @@
-﻿@*
-    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
-*@
-@{
-}
-<h1>Order Management</h1>
+﻿
+@addTagHelper *,Microsoft.AspNetCore.Mvc.TagHelpers
+@using BussinessObject.Models;
+<h1>List All Orders</h1>
+<div id="add-prod-button"></div>
+<div>
+	<table class="table">
+		<thead>
+			<tr>
+				<th scope="col">ID</th>
+				<th scope="col">User</th>
+				<th scope="col">OrderDate</th>
+				<th scope="col">RequiredDate</th>
+				<th scope="col">ShipDate</th>
+				<th scope="col">Freight</th>
+				<th scope="col">Action</th>
+			</tr>
+		</thead>
+		<tbody id="productTable">
+		</tbody>
+	</table>
+	<div class="modal fade"
+		 id="exampleModal"
+		 tabindex="-1"
+		 aria-labelledby="exampleModalLabel"
+		 aria-hidden="true">
+		<div class="modal-dialog">
+			<div class="modal-content">
+				<div class="modal-header">
+					<h1 class="modal-title fs-5" id="exampleModalLabel">
+						Add Order
+					</h1>
+					<button type="button"
+							class="btn-close"
+							data-bs-dismiss="modal"
+							aria-label="Close"></button>
+				</div>
+				<div class="modal-body">
+					<form id="add-prod-form">
+						<div id="category" class="mb-3">
+							<label for="category-name"
+								   class="col-form-label">User:</label>
+							<select id="category-name"
+									class="form-select"
+									aria-label="Default select example">
+								<option selected>User</option>
+							</select>
+						</div>
+						<div class="mb-3">
+							<label for="product-name"
+								   class="col-form-label">OrderDate:</label>
+							<input type="date"
+								   class="form-control"
+								   id="product-name" />
+						</div>
+						<div class="mb-3">
+							<label for="product-weight"
+								   class="col-form-label">RequiredDate:</label>
+							<input type="date"
+								   class="form-control"
+								   id="product-weight" />
+						</div>
+						<div class="mb-3">
+							<label for="product-unit-price"
+								   class="col-form-label">ShipDate:</label>
+							<input type="date"
+								   class="form-control"
+								   id="product-unit-price"
+								   step="0.1" />
+						</div>
+						<div class="mb-3">
+							<label for="product-unit-in-stock"
+								   class="col-form-label">Freight:</label>
+							<input type="number"
+								   class="form-control"
+								   id="product-unit-in-stock" />
+						</div>
+					</form>
+				</div>
+				<div class="modal-footer">
+					<button type="button"
+							class="btn btn-secondary"
+							data-bs-dismiss="modal">
+						Close
+					</button>
+					<button id="add-prod-btn"
+							type="button"
+							class="btn btn-primary">
+						Add
+					</button>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div class="modal fade"
+		 id="updateProductModal"
+		 tabindex="-1"
+		 aria-labelledby="updateProductModalLabel"
+		 aria-hidden="true">
+		<div class="modal-dialog">
+			<div class="modal-content">
+				<div class="modal-header">
+					<h1 class="modal-title fs-5"
+						id="updateProductModalLabel">
+						Update Product
+					</h1>
+					<button type="button"
+							class="btn-close"
+							data-bs-dismiss="modal"
+							aria-label="Close"></button>
+				</div>
+				<div class="modal-body">
+					<form>
+						<div id="category" class="mb-3">
+							<label for="category-name-update"
+								   class="col-form-label">User:</label>
+							<select disabled
+									id="category-name-update"
+									class="form-select"
+									aria-label="Default select example">
+								<option selected>User</option>
+							</select>
+						</div>
+						<div class="mb-3">
+							<label for="product-name-update"
+								   class="col-form-label">OrderDate:</label>
+							<input type="date"
+								   class="form-control"
+								   id="product-name-update" />
+						</div>
+						<div class="mb-3">
+							<label for="product-weight-update"
+								   class="col-form-label">RequiredDate:</label>
+							<input type="date"
+								   class="form-control"
+								   id="product-weight-update" />
+						</div>
+						<div class="mb-3">
+							<label for="product-unit-price-update"
+								   class="col-form-label">ShipDate:</label>
+							<input type="date"
+								   class="form-control"
+								   id="product-unit-price-update"
+								   step="0.1" />
+						</div>
+						<div class="mb-3">
+							<label for="product-unit-in-stock-update"
+								   class="col-form-label">Freight:</label>
+							<input type="number"
+								   class="form-control"
+								   id="product-unit-in-stock-update" />
+						</div>
+					</form>
+				</div>
+				<div class="modal-footer">
+					<button type="button"
+							class="btn btn-secondary"
+							data-bs-dismiss="modal">
+						Close
+					</button>
+					<button id="update-prod-btn"
+							type="button"
+							class="btn btn-primary">
+						Save
+					</button>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+
+<script src="~/lib/jquery/dist/jquery.min.js"></script>
+<script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+<script src="~/js/order/orders.js"></script>
