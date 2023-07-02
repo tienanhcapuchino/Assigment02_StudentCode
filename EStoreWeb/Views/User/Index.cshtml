@@ -9,5 +9,19 @@
 <h1>User profile</h1>
 
 <form class="form-control" asp-controller="User" asp-action="Update">
-
+    <input type="hidden" asp-for="Id" value="@Model.Id" /> <br /> <br />
+    <input type="text" asp-for="Username" value="@Model.Username" required /> <br /> <br />
+    <input type="email" asp-for="Email" value="@Model.Email" required /> <br /> <br />
+    <input type="text" asp-for="PhoneNumber" value="@Model.PhoneNumber" required /> <br /> <br />
+    <input type="submit" value="Save" class="btn btn-primary" /><br /><br />
+    @{
+        if (ViewBag.Success != null)
+        {
+            <span class="text text-success">@ViewBag.Success</span>
+        }
+        if (ViewBag.Error != null)
+        {
+            <span class="text text-danger">@ViewBag.Error</span>
+        }
+    }
 </form>
