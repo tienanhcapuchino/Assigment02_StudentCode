@@ -21,14 +21,12 @@ namespace DataAccess.Services
     {
         private UserManager<User> _userManager;
         private readonly RoleManager<IdentityRole> _roleManager;
-        private readonly SignInManager<User> _signInManager;
         private readonly AdminAccount _admin;
         private readonly JWTSetting _jwtSetting;
         private readonly EStoreDbContext _dbContext;
         private readonly IMapper _map;
         public UserService(UserManager<User> userManager,
             RoleManager<IdentityRole> roleManager,
-            SignInManager<User> signInManager,
             IOptionsMonitor<AdminAccount> admin,
             IOptionsMonitor<JWTSetting> jwt,
             EStoreDbContext eStoreDb,
@@ -36,7 +34,6 @@ namespace DataAccess.Services
         {
             _userManager = userManager;
             _roleManager = roleManager;
-            _signInManager = signInManager;
             _admin = admin.CurrentValue;
             _jwtSetting = jwt.CurrentValue;
             _dbContext = eStoreDb;

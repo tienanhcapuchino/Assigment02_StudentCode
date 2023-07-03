@@ -22,6 +22,7 @@ namespace DataAccess.AutoMapper
             CreateMap<User, UserProfileModel>().ReverseMap();
             #region order
             CreateMap<OrderAddModel, Order>();
+            CreateMap<OrderDetailVM, OrderDetail>();
             CreateMap<Order, OrderVM>()
                 .ForMember(dest => dest.Username, opt => opt.MapFrom(src => src.User.UserName)).ReverseMap();
             #endregion
