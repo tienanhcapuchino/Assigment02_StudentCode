@@ -8,11 +8,10 @@ namespace BussinessObject.Models
 {
     public class OrderAddModel
     {
-        public string MemberId { get; set; }
         public DateTime OrderDate { get; set; }
         public DateTime RequiredDate { get; set; }
         public DateTime ShipDate { get; set; }
-        public double Freight { get; set; }
-        public List<int> ProductIds { get; set; }
+        public double? Freight { get; set; }
+        public List<OrderDetailVM> OrderDetails { get; set; }
     }
 }

@@ -16,11 +16,14 @@ namespace DataAccess.Services
     {
         private readonly EStoreDbContext _dbContext;
         private readonly IMapper _mapper;
+        private readonly IOrderDetailService _orderDetailService;
         public OrderService(EStoreDbContext dbContext,
-            IMapper mapper)
+            IMapper mapper,
+            IOrderDetailService orderDetailService)
         {
             _dbContext = dbContext;
             _mapper = mapper;
+            _orderDetailService = orderDetailService;
         }
 
         public async Task<bool> Add(Order entity, bool saveChange = true)
@@ -34,9 +37,14 @@ namespace DataAccess.Services
             return await Task.FromResult(result);
         }
 
-        public Task<bool> AddOrder(OrderAddModel model)
+        public async Task<bool> AddOrder(OrderAddModel model, string userId)
         {
-            throw new NotImplementedException();
+            var entity = _mapper.Map<Order>(model);
+            entity.MemberId = userId;
+            await Add(entity);
+            await _orderDetailService.AddOrderDetails(entity.OrderId, model.OrderDetails);
+            //await _dbContext.SaveChangesAsync();
+            return true;
         }
 
         public async Task<bool> Delete(Order entity, bool saveChange = true)

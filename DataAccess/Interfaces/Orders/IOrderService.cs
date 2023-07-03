@@ -10,7 +10,7 @@ namespace DataAccess.Interfaces
 {
     public interface IOrderService : IRepository<Order>
     {
-        Task<bool> AddOrder(OrderAddModel model);
+        Task<bool> AddOrder(OrderAddModel model, string userId);
         Task<bool> UpdateOrder(int orderId, OrderVM model);
         Task<bool> DeleteOrder(int orderId);
         Task<List<OrderVM>> GetAllOrders();

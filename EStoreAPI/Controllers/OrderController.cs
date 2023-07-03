@@ -1,4 +1,5 @@
-﻿using DataAccess.Interfaces;
+﻿using BussinessObject.Models;
+using DataAccess.Interfaces;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -37,6 +38,19 @@ namespace EStoreAPI.Controllers
             try
             {
                 var result = await _orderService.GetOrdersHistoryByUser(userId);
+                return Ok(result);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.ToString());
+            }
+        }
+        [HttpPost("add/{userId}")]
+        public async Task<IActionResult> AddOrder([FromRoute] string userId, [FromBody] OrderAddModel model)
+        {
+            try
+            {
+                var result = await _orderService.AddOrder(model, userId);
                 return Ok(result);
             }
             catch (Exception ex)
