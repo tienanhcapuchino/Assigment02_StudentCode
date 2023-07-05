@@ -1,5 +1,6 @@
 ﻿using BussinessObject.Models;
 using DataAccess.Services;
+using EStoreWeb.Routes;
 using EStoreWeb.Services;
 using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
@@ -33,9 +34,21 @@ namespace EStoreWeb.Controllers
             return View();
         }
         
-        public IActionResult ProductUser()
+        public async Task<IActionResult> ProductUser()
         {
-            return View();
+            var token = _commonService.GetToken();
+            HttpResponseMessage respone = DataAccess.Services.CommonService.GetDataAPI(RoutesManager.GetAllProduct, MethodAPI.GET, token);
+            if (respone.IsSuccessStatusCode)
+            {
+                if (TempData["SuccessAddCart"] != null)
+                {
+                    ViewBag.AddSuccess = TempData["SuccessAddCart"] as string;
+                }
+                var dataResult = await respone.Content.ReadAsStringAsync();
+                var resultList = JsonConvert.DeserializeObject<List<ProductVM>>(dataResult);
+                return View(resultList);
+            }
+            return BadRequest();
         }
     }
 }

@@ -51,6 +51,10 @@ namespace EStoreAPI.Controllers
             try
             {
                 var result = await _orderService.AddOrder(model, userId);
+                if (result)
+                {
+                    Response.Cookies.Delete("cart");
+                }
                 return Ok(result);
             }
             catch (Exception ex)
