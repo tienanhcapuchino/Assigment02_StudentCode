@@ -17,12 +17,18 @@
         public static string Register = $"{GetUrlPattern(EndPoint.User)}/register";
         public static string UserProfile = $"{GetUrlPattern(EndPoint.User)}/profile";
         #endregion
+
+        #region cart
+        public static string AddToCart = $"{GetUrlPattern(EndPoint.Cart)}/add";
+        public static string DeleteCart = $"{GetUrlPattern(EndPoint.Cart)}/delete";
+        #endregion
     }
     public enum EndPoint
     {
         Product,
         Order,
         User,
-        Category
+        Category,
+        Cart
     }
 }

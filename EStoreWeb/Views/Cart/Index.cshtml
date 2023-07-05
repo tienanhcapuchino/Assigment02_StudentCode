@@ -1,0 +1,59 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+}
+@addTagHelper *,Microsoft.AspNetCore.Mvc.TagHelpers
+@using BussinessObject.Models
+
+<h1>Cart page</h1>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>Product</th>
+            <th>UnitPrice</th>
+            <th>Quantity</th>
+            <th>Total</th>
+            <th>Action</th>
+        </tr>
+    </thead>
+    <tbody>
+        @{
+            if (Model == null)
+            {
+                <span class="text text-secondary">There is no carts. You can shopping first!</span>
+            }
+            else
+            {
+                foreach (CartModel cart in Model)
+                {
+                    var total = cart.UnitPrice * cart.Quantity;
+                    <tr>
+                        <td>@cart.ProductName</td>
+                        <td>@cart.UnitPrice</td>
+                        <td>@cart.Quantity</td>
+                        <td>@total</td>
+                        <td>
+                            <a asp-controller="Cart" asp-action="DeleteCart" asp-route-productId="@cart.ProductId">
+                                <i class="fa-solid fa-trash"></i>
+                            </a>
+                        </td>
+                    </tr>
+                }
+            }
+        }
+    </tbody>
+</table>
+@{
+    if (Model != null)
+    {
+        <a asp-controller="Cart" class="btn btn-primary" asp-action="DeleteAllCart">Delete all</a>
+    }
+}
+@{
+    if (ViewBag.DeleteSuccess != null)
+    {
+        <span class="text text-success">@ViewBag.DeleteSuccess</span>
+    }
+}

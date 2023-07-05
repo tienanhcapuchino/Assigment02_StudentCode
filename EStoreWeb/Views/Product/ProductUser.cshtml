@@ -1,11 +1,15 @@
-﻿@*
-    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
-*@
-@{
-}
-<h1>User role product page</h1>
+﻿@addTagHelper *,Microsoft.AspNetCore.Mvc.TagHelpers
+@using BussinessObject.Models
 
-<table class="table-bordered">
+<h1>Home page for user</h1>
+
+@{
+    if (ViewBag.AddSuccess != null)
+    {
+        <span class="text text-success">@ViewBag.AddSuccess</span>
+    }
+}
+<table class="table">
     <thead>
         <tr>
             <th scope="col">Category</th>
@@ -16,12 +20,23 @@
             <th scope="col">Action</th>
         </tr>
     </thead>
-    <tbody>
-        @*@{
-            foreach(var item in Model)
+    <tbody id="product-user">
+        @{
+            foreach (ProductVM item in Model)
             {
-                
+                <tr>
+                    <td id="productId">@item.CategoryName</td>
+                    <td>@item.Name</td>
+                    <td>@item.UnitPrice</td>
+                    <td>@item.UnitInStock</td>
+                    <td>@item.Weight</td>
+                    <td>
+                        <a asp-controller="Cart" asp-action="AddToCart" asp-route-id="@item.ProductId">
+                            <i class="fa-solid fa-cart-shopping"></i>
+                        </a>
+                    </td>
+                </tr>
             }
-        }*@
+        }
     </tbody>
 </table>
