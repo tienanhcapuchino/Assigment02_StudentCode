@@ -10,7 +10,7 @@ namespace EStoreWeb.Controllers
     {
         private ICommonService _commonService;
         private IHttpContextAccessor _contextAccessor;
-        private string TokenData { get; set; }
+        private string? TokenData { get; set; }
         public CartController(ICommonService commonService,
             IHttpContextAccessor contextAccessor)
         {
@@ -30,7 +30,7 @@ namespace EStoreWeb.Controllers
             {
                 ViewBag.DeleteSuccess = TempData["SuccessAddCart"] as string;
             }
-                if (!string.IsNullOrEmpty(cartValue))
+            if (!string.IsNullOrEmpty(cartValue))
             {
                 List<CartModel> carts = JsonConvert.DeserializeObject<List<CartModel>>(cartValue);
                 return View(carts);
@@ -40,6 +40,10 @@ namespace EStoreWeb.Controllers
 
         public async Task<IActionResult> AddToCart(int id)
         {
+            if (string.IsNullOrEmpty(TokenData))
+            {
+                return Redirect("../../Home/Index");
+            }
             HttpResponseMessage respone = new HttpResponseMessage();
             var cookies = Request.Cookies["cart"];
             if (!string.IsNullOrEmpty(cookies))
@@ -55,7 +59,7 @@ namespace EStoreWeb.Controllers
                 var datas = await respone.Content.ReadAsStringAsync();
                 var cookieOptions = new CookieOptions
                 {
-                    Expires = DateTime.Now.AddDays(7),
+                    Expires = DateTime.Now.AddDays(10),
                 };
                 Response.Cookies.Append("cart", datas, cookieOptions);
                 TempData["SuccessAddCart"] = "Add product to cart success";
@@ -66,6 +70,10 @@ namespace EStoreWeb.Controllers
 
         public async Task<IActionResult> DeleteCart(int productId)
         {
+            if (string.IsNullOrEmpty(TokenData))
+            {
+                return Redirect("../../Home/Index");
+            }
             var cookies = Request.Cookies["cart"];
             HttpResponseMessage respone = DataAccess.Services.CommonService.GetDataAPI($"{RoutesManager.DeleteCart}/{productId}", MethodAPI.POST, TokenData, cookies);
             if (respone.IsSuccessStatusCode)
@@ -75,7 +83,12 @@ namespace EStoreWeb.Controllers
                 {
                     Expires = DateTime.Now.AddDays(7),
                 };
+                var cartNews = JsonConvert.DeserializeObject<List<CartModel>>(datas);
                 Response.Cookies.Append("cart", datas, cookieOptions);
+                if (cartNews == null || cartNews.Count == 0)
+                {
+                    Response.Cookies.Delete("cart");
+                }
                 TempData["SuccessDeleteCart"] = "Delete product to cart success";
             }
             return RedirectToAction("Index");
@@ -83,6 +96,10 @@ namespace EStoreWeb.Controllers
 
         public IActionResult DeleteAllCart()
         {
+            if (string.IsNullOrEmpty(TokenData))
+            {
+                return Redirect("../../Home/Index");
+            }
             Response.Cookies.Delete("cart");
             return RedirectToAction("Index");
         }

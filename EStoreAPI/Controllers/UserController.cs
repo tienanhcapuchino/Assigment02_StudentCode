@@ -1,8 +1,10 @@
 ﻿using BussinessObject.Models;
+using DataAccess.DataContext;
 using DataAccess.Interfaces;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 
 namespace EStoreAPI.Controllers
 {
@@ -11,9 +13,12 @@ namespace EStoreAPI.Controllers
     public class UserController : ControllerBase
     {
         private readonly IUserService _userService;
-        public UserController(IUserService userService)
+        private readonly EStoreDbContext _context;
+        public UserController(IUserService userService,
+            EStoreDbContext eStoreDbContext)
         {
             _userService = userService;
+            _context = eStoreDbContext;
         }
         [HttpPost("register")]
         public async Task<APIResponeModel> Register([FromBody] UserRegisterModel model)
@@ -124,6 +129,50 @@ namespace EStoreAPI.Controllers
                     return NotFound();
                 }
                 return Ok(user);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
+        }
+        [Authorize(Roles = "Admin")]
+        [HttpGet("salereport/{fromDate:datetime}/{toDate:datetime}")]
+
+        public IActionResult GetSaleReport([FromRoute] DateTime fromDate, [FromRoute] DateTime toDate)
+        {
+            try
+            {
+                var result = _context.OrderDetails
+               .Join(_context.Orders,
+                   od => od.OrderId,
+                   o => o.OrderId,
+                   (od, o) => new { OrderDetail = od, Order = o })
+                .Join(
+                   _context.Products,
+                   od => od.OrderDetail.ProductId,
+                   p => p.ProductId,
+                   (od, p) => new { od.OrderDetail, od.Order, Product = p }
+               )
+               .Where(x => x.Order.OrderDate >= fromDate && x.Order.OrderDate <= toDate)
+               .GroupBy(
+                   x => new
+                   {
+                       OrderDate = x.Order.OrderDate,
+                       ProductName = x.Product.Name,
+                       UnitPrice = x.OrderDetail.UnitPrice
+                   })
+               .Select(g => new
+               {
+                   OrderDate = g.Key.OrderDate,
+                   ProductName = g.Key.ProductName,
+                   UnitPrice = g.Key.UnitPrice,
+                   Quantity = g.Sum(x => x.OrderDetail.Quantity),
+                   Sales = g.Sum(x => x.OrderDetail.Quantity) * g.Key.UnitPrice
+               })
+               .OrderByDescending(x => x.OrderDate)
+               .ThenByDescending(x => x.Sales)
+               .ToList();
+                return Ok(result);
             }
             catch (Exception ex)
             {

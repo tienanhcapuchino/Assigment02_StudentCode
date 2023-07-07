@@ -1,0 +1,28 @@
+﻿@addTagHelper *,Microsoft.AspNetCore.Mvc.TagHelpers
+@using BussinessObject.Entities;
+
+<h1>Order history</h1>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>OrderDate</th>
+            <th>ShipDate</th>
+            <th>RequireDate</th>
+            <th>Freight</th>
+        </tr>
+    </thead>
+    <tbody>
+        @{
+            foreach (Order or in Model)
+            {
+                <tr>
+                    <td>@or.OrderDate.ToString("dd/mm/yyyy")</td>
+                    <td>@or.ShipDate.ToString("dd/mm/yyyy")</td>
+                    <td>@or.RequiredDate.ToString("dd/mm/yyyy")</td>
+                    <td>@or.Freight</td>
+                </tr>
+            }
+        }
+    </tbody>
+</table>

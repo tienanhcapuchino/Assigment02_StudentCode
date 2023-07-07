@@ -16,11 +16,17 @@
         public static string Login = $"{GetUrlPattern(EndPoint.User)}/login";
         public static string Register = $"{GetUrlPattern(EndPoint.User)}/register";
         public static string UserProfile = $"{GetUrlPattern(EndPoint.User)}/profile";
+        public static string GetSaleReport = $"{GetUrlPattern(EndPoint.User)}/salereport";
         #endregion
 
         #region cart
         public static string AddToCart = $"{GetUrlPattern(EndPoint.Cart)}/add";
         public static string DeleteCart = $"{GetUrlPattern(EndPoint.Cart)}/delete";
+        #endregion
+
+        #region order
+        public static string OrderHistory = $"{GetUrlPattern(EndPoint.Order)}/orderhistory";
+        public static string AddOrder = $"{GetUrlPattern(EndPoint.Order)}/add";
         #endregion
     }
     public enum EndPoint
