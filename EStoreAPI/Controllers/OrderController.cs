@@ -11,9 +11,12 @@ namespace EStoreAPI.Controllers
     public class OrderController : ControllerBase
     {
         private readonly IOrderService _orderService;
-        public OrderController(IOrderService orderService)
+        private readonly IProductService _productService;
+        public OrderController(IOrderService orderService,
+            IProductService productService)
         {
             _orderService = orderService;
+            _productService = productService;
         }
 
         //[Authorize(Roles = "Admin")]
@@ -45,16 +48,14 @@ namespace EStoreAPI.Controllers
                 return BadRequest(ex.ToString());
             }
         }
+
+        [Authorize(Roles = "User")]                
         [HttpPost("add/{userId}")]
         public async Task<IActionResult> AddOrder([FromRoute] string userId, [FromBody] OrderAddModel model)
         {
             try
             {
                 var result = await _orderService.AddOrder(model, userId);
-                if (result)
-                {
-                    Response.Cookies.Delete("cart");
-                }
                 return Ok(result);
             }
             catch (Exception ex)

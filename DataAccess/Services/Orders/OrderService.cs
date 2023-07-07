@@ -43,7 +43,6 @@ namespace DataAccess.Services
             entity.MemberId = userId;
             await Add(entity);
             await _orderDetailService.AddOrderDetails(entity.OrderId, model.OrderDetails);
-            //await _dbContext.SaveChangesAsync();
             return true;
         }
 
@@ -92,7 +91,7 @@ namespace DataAccess.Services
 
         public async Task<List<Order>> GetOrdersHistoryByUser(string userId)
         {
-            var orders  = await _dbContext.Orders.Include(x => x.OrderDetails).Where(x => x.MemberId.Equals(userId)).ToListAsync();
+            var orders  = await _dbContext.Orders.Where(x => x.MemberId.Equals(userId)).ToListAsync();
             return orders;
         }
 

@@ -1,0 +1,25 @@
+﻿
+<h1>Sale report</h1>
+
+<form class="form form-control">
+    <input class="form-control" type="date" /> <br /><br />
+    <input class="form-control" type="date" /><br /><br />
+    <input type="submit" id="createReport" value="Create report" class="btn btn-primary" />
+</form>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th scope="col">Order Date</th>
+            <th scope="col">Product Name</th>
+            <th scope="col">Unit Price</th>
+            <th scope="col">Quantity</th>
+            <th scope="col">Figure</th>
+        </tr>
+    </thead>
+    <tbody id="sale-report"></tbody>
+</table>
+
+<script src="~/lib/jquery/dist/jquery.min.js"></script>
+<script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+<script src="~/js/salereport.js"></script>

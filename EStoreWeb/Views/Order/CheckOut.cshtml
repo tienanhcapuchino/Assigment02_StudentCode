@@ -1,0 +1,30 @@
+﻿@addTagHelper *,Microsoft.AspNetCore.Mvc.TagHelpers
+@using BussinessObject.Models
+
+<h1>Make order</h1>
+
+<form class="form form-control">
+    @{
+        int i = 1;
+        foreach (CartModel item in Model)
+        {
+            <label>Product @i</label>
+            <input required type="text" readonly class="form-control" value="@item.ProductName">
+            <label>UnitPrice</label>
+            <input required type="text" readonly class="form-control" value="@item.UnitPrice">
+            <label>Quantity</label>
+            <input required type="text" readonly class="form-control" value="@item.Quantity">
+            <hr />
+            i++;
+        }
+
+        if (ViewBag.Total != null)
+        {
+            <span class="text-primary fw-bold">Total price: @ViewBag.Total</span>
+        }
+        <br />
+
+        <br />
+        <a class="btn btn-primary" asp-controller="Order" asp-action="MakeOrder">Make order</a>
+    }
+</form>
