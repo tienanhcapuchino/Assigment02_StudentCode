@@ -105,6 +105,7 @@ namespace EStoreWeb.Controllers
             if (respone.IsSuccessStatusCode)
             {
                 ViewBag.CheckSuccess = "Check out successfully!";
+                Response.Cookies.Delete("cart");
                 return Redirect("../../Cart/Index");
             }
             else
