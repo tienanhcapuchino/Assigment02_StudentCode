@@ -15,5 +15,7 @@ namespace DataAccess.Interfaces
         Task<bool> AddProduct(ProductAddModel product);
         Task<bool> UpdateProduct(int productId, ProductUpdateModel model);
         Task<List<Product>> GetProductsByProductIds(List<int> productIds);
+        Task<List<ProductVM>> SearchByName(string name);
+        Task<List<ProductVM>> SearchByPrice(double? priceFrom, double? priceTo);
     }
 }

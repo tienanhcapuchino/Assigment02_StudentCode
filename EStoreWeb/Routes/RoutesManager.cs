@@ -10,6 +10,8 @@
         #region product
         public static string GetAllProduct = $"{GetUrlPattern(EndPoint.Product)}/getall";
         public static string AddProduct = $"{GetUrlPattern(EndPoint.Product)}/add";
+        public static string SearchByName = $"{GetUrlPattern(EndPoint.Product)}/searchByName";
+        public static string SearchByPrice = $"{GetUrlPattern(EndPoint.Product)}/searchByPrice";
         #endregion
 
         #region user

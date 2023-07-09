@@ -112,7 +112,7 @@ function LoadProduct() {
 									<td>${product.categoryName}</td>
 									<td>${product.name}</td>
 									<td>${product.weight}</td>
-									<td>${product.unitPrice}$</td>
+									<td>${product.unitPrice}</td>
 									<td>${product.unitInStock}</td>
 									<td>
 									<button type="button" class="btn btn-success" data-bs-toggle="modal"
@@ -188,3 +188,106 @@ function deleteProd(model) {
 		},
 	})
 };
+
+$('#searchBtnName').click(() => {
+	let searchName = $('#searchName').val();
+	$.ajax({
+		url: "http://localhost:5063/api/Product/searchByName?name=" + searchName,
+		method: "GET",
+		contentType: "application/json",
+		headers: {
+			Authorization: "Bearer " + token,
+		},
+		success: (response) => {
+			$("#productTable").empty();
+			$("#productTable").append(
+				response.map(
+					(product) => (
+						`<tr>
+								<th scope="row">${product.productId}</th>
+									<td>${product.categoryName}</td>
+									<td>${product.name}</td>
+									<td>${product.weight}</td>
+									<td>${product.unitPrice}</td>
+									<td>${product.unitInStock}</td>
+									<td>
+									<button type="button" class="btn btn-success" data-bs-toggle="modal"
+														data-bs-target="#updateProductModal"
+														data-prod-id="${product.productId}"
+														data-prod-cate="${product.categoryId}"
+														data-prod-name="${product.name}"
+														data-prod-weight="${product.weight}"
+														data-prod-unit-price="${product.unitPrice}"
+														data-prod-unit-in-stock="${product.unitInStock}"
+														onclick="updateProd(this)">
+													<i class="fa-solid fa-pen-to-square"></i>
+												</button>
+												<button type="button" class="btn btn-danger" data-prod-id="${product.productId}"
+												onclick="deleteProd(this)">
+											<i class="fa-solid fa-trash"></i>
+										</button>
+								</td>
+							</tr>`
+					)
+				)
+			);
+		},
+		error: function (xhr, status, error) {
+			console.log(error);
+			alert(xhr.responseText);
+		},
+	})
+
+});
+$('#searchBtnPrice').click(() => {
+	let searchFrom = $('#searchFromPrice').val();
+	let searchTo = $('#searchToPrice').val();
+	if (searchFrom !== null && searchTo !== null) {
+		$.ajax({
+			url: "http://localhost:5063/api/Product/searchByPrice?priceFrom=" + searchFrom + "&priceTo=" + searchTo,
+			method: "GET",
+			contentType: "application/json",
+			headers: {
+				Authorization: "Bearer " + token,
+			},
+			success: (response) => {
+				$("#productTable").empty();
+				$("#productTable").append(
+					response.map(
+						(product) => (
+							`<tr>
+								<th scope="row">${product.productId}</th>
+									<td>${product.categoryName}</td>
+									<td>${product.name}</td>
+									<td>${product.weight}</td>
+									<td>${product.unitPrice}</td>
+									<td>${product.unitInStock}</td>
+									<td>
+									<button type="button" class="btn btn-success" data-bs-toggle="modal"
+														data-bs-target="#updateProductModal"
+														data-prod-id="${product.productId}"
+														data-prod-cate="${product.categoryId}"
+														data-prod-name="${product.name}"
+														data-prod-weight="${product.weight}"
+														data-prod-unit-price="${product.unitPrice}"
+														data-prod-unit-in-stock="${product.unitInStock}"
+														onclick="updateProd(this)">
+													<i class="fa-solid fa-pen-to-square"></i>
+												</button>
+												<button type="button" class="btn btn-danger" data-prod-id="${product.productId}"
+												onclick="deleteProd(this)">
+											<i class="fa-solid fa-trash"></i>
+										</button>
+								</td>
+							</tr>`
+						)
+					)
+				);
+			},
+			error: function (xhr, status, error) {
+				console.log(error);
+				alert(xhr.responseText);
+			},
+		})
+	}
+});
