@@ -7,6 +7,12 @@
 @using BussinessObject.Models;
 <h1>List All Products</h1>
 <a class="btn btn-primary" asp-controller="SaleReport" asp-action="Index">Sale report</a>
+<input class="form-controll" placeholder="search by name" type="text" id ="searchName" />
+<a class="btn btn-primary" id ="searchBtnName">Search</a>
+<br /><br />
+<input class="form-controll" placeholder="price from" type="number" step ="any" id ="searchFromPrice" />
+<input class="form-controll" type="number" placeholder="price to" step ="any" id ="searchToPrice" />
+<a class="btn btn-primary" id ="searchBtnPrice">Search</a>
 <br />
 <br />
 <div id="add-prod-button"></div>

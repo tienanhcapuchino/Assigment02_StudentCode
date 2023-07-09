@@ -9,6 +9,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Xml.Linq;
 
 namespace DataAccess.Services
 {
@@ -87,6 +88,21 @@ namespace DataAccess.Services
         public async Task<List<Product>> GetProductsByProductIds(List<int> productIds)
         {
             var result = await _dbContext.Products.Where(x => productIds.Contains(x.ProductId)).ToListAsync();
+            return result;
+        }
+
+        public async Task<List<ProductVM>> SearchByName(string name)
+        {
+            var products = await _dbContext.Products.Include(x => x.Category).Where(x => x.Name.Contains(name)).ToListAsync();
+            var result = _mapper.Map<List<ProductVM>>(products);
+            return result;
+        }
+
+        public async Task<List<ProductVM>> SearchByPrice(double? priceFrom, double? priceTo)
+        {
+            var products = await _dbContext.Products.Include(x => x.Category).Where(x => x.UnitPrice >= priceFrom
+                                                            && x.UnitPrice <= priceTo).ToListAsync();
+            var result = _mapper.Map<List<ProductVM>>(products);
             return result;
         }
 
