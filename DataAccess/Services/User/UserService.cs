@@ -236,5 +236,11 @@ namespace DataAccess.Services
             var result = _map.Map<UserProfileModel>(userEntity);
             return result;
         }
+
+        public async Task<User> GetUserByEmail(string email)
+        {
+            var result = await _userManager.FindByEmailAsync(email);
+            return result;
+        }
     }
 }
