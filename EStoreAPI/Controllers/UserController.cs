@@ -1,8 +1,10 @@
-﻿using BussinessObject.Models;
+﻿using BussinessObject.Entities;
+using BussinessObject.Models;
 using DataAccess.DataContext;
 using DataAccess.Interfaces;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
@@ -14,11 +16,14 @@ namespace EStoreAPI.Controllers
     {
         private readonly IUserService _userService;
         private readonly EStoreDbContext _context;
+        private readonly SignInManager<User> _signIn;
         public UserController(IUserService userService,
-            EStoreDbContext eStoreDbContext)
+            EStoreDbContext eStoreDbContext,
+            SignInManager<User> signInManager)
         {
             _userService = userService;
             _context = eStoreDbContext;
+            _signIn = signInManager;
         }
         [HttpPost("register")]
         public async Task<APIResponeModel> Register([FromBody] UserRegisterModel model)
@@ -68,6 +73,26 @@ namespace EStoreAPI.Controllers
                         Data = errors,
                         IsSuccess = false,
                         Message = string.Join(";", errors)
+                    };
+                }
+                var userEntity = await _userService.GetUserByEmail(model.Email);
+                if (userEntity == null)
+                {
+                    return new APIResponeModel()
+                    {
+                        Code = 400,
+                        Message = "Username or password is incorrect",
+                        IsSuccess = false
+                    };
+                }
+                var checkLockUser = await _signIn.CheckPasswordSignInAsync(userEntity, model.Password, lockoutOnFailure: true);
+                if (checkLockUser.IsLockedOut)
+                {
+                    return new APIResponeModel()
+                    {
+                        Code = 400,
+                        Message = "Your account is locked. Please try again after 30 minutes",
+                        IsSuccess = false
                     };
                 }
                 var result = await _userService.Login(model);
