@@ -76,24 +76,18 @@ namespace EStoreAPI.Controllers
                     };
                 }
                 var userEntity = await _userService.GetUserByEmail(model.Email);
-                if (userEntity == null)
+                if (userEntity != null)
                 {
-                    return new APIResponeModel()
+                    var checkLockUser = await _signIn.CheckPasswordSignInAsync(userEntity, model.Password, lockoutOnFailure: true);
+                    if (checkLockUser.IsLockedOut)
                     {
-                        Code = 400,
-                        Message = "Username or password is incorrect",
-                        IsSuccess = false
-                    };
-                }
-                var checkLockUser = await _signIn.CheckPasswordSignInAsync(userEntity, model.Password, lockoutOnFailure: true);
-                if (checkLockUser.IsLockedOut)
-                {
-                    return new APIResponeModel()
-                    {
-                        Code = 400,
-                        Message = "Your account is locked. Please try again after 30 minutes",
-                        IsSuccess = false
-                    };
+                        return new APIResponeModel()
+                        {
+                            Code = 400,
+                            Message = "Your account is locked. Please try again after 30 minutes",
+                            IsSuccess = false
+                        };
+                    }
                 }
                 var result = await _userService.Login(model);
                 return result;
